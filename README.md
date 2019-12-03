@@ -30,7 +30,7 @@ Line x+2: The final line should include the accept state of the Turing Machine.
 
 # Demo:
 
-To run the simulator with the given demos, download the turingmachinesimulator.cc file and the 3 text files containing the demo Turing Machines. Compile turingmachinesimulator.cc in your compiler of choice. Make sure that the text files are saved in the same folder in which the program is being run, or make sure you know the filepath of where the program can find the text files. When you run the program, it will ask you to provide the text file that contains the Turing Machine you want to run. You can provide turing1.txt, turing2.txt, or turing3.txt
+To run the simulator with the given demos, download the turingmachinesimulator.cc file and the 3 text files containing the demo Turing Machines. Compile turingmachinesimulator.cc in your compiler of choice. Alternatively, you can also use the Makefile provided in this repository and run the make command. Make sure that the text files are saved in the same folder in which the program is being run, or make sure you know the filepath of where the program can find the text files. When you run the program, it will ask you to provide the text file that contains the Turing Machine you want to run. You can provide turing1.txt, turing2.txt, or turing3.txt
 
 turing1.txt:
 
