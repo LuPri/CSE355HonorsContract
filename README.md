@@ -1,5 +1,10 @@
 # CSE355HonorsContract
-Input File Format:
+
+# Overview
+
+This repository contains a C++ program that acts a simulator for a simple Turing Machine following the definition of a Turing Machine given by Michael Sipser in textbook Introduction to the Theory of Computation. This program will asks the user to provide the name of a file that contains the description of a Turing Machine. The program will then allow the user to give input strings. Then, the program will print out the calculation trace of the Turing Machine at each step until it reaches the accept or reject state. Note that you can cause an infinite loop if you give the description of a recognizable language.   
+
+# Input File Format:
 
 The input files for the Turing machine simulator must be given in the following format in order for the program to read in the Turing machine correctly.
 
@@ -23,7 +28,7 @@ Line x +1: The next line after the last transition should the start state of the
 
 Line x+2: The final line should include the accept state of the Turing Machine.
 
-Demo:
+# Demo:
 
 To run the simulator with the given demos, download the turingmachinesimulator.cc file and the 3 text files containing the demo Turing Machines. Compile turingmachinesimulator.cc in your compiler of choice. Make sure that the text files are saved in the same folder in which the program is being run, or make sure you know the filepath of where the program can find the text files. When you run the program, it will ask you to provide the text file that contains the Turing Machine you want to run. You can provide turing1.txt, turing2.txt, or turing3.txt
 
