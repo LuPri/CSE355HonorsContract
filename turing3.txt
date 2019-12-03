@@ -1,0 +1,28 @@
+9
+q1 q2 q3 q4 q5 q6 q7 q8 qaccept
+3
+a b c
+4
+_ x y z
+19
+q1 a -> q2 x R
+q2 a -> q2 a R
+q2 b -> q3 y R
+q3 b -> q3 b R
+q3 z -> q3 z R
+q3 c -> q4 z L
+q4 z -> q4 z L
+q4 b -> q4 b L
+q4 y -> q5 y R
+q5 b -> q3 y R
+q5 z -> q6 z L
+q6 y -> q6 b L
+q6 a -> q6 a L
+q6 x -> q7 x R
+q7 a -> q2 x R
+q7 b -> q8 b R
+q8 b -> q8 b R
+q8 z -> q8 z R
+q8 _ -> qaccept _ R
+q1
+qaccept
