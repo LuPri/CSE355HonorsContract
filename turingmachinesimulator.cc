@@ -24,7 +24,6 @@ typedef struct turingMachine{
 	string accept;
 }turingMachine;
 
-turingMachine read_secen_tuple(string file);
 void printMachine(turingMachine machine);
 
 turingMachine read_seven_tuple(string file){
