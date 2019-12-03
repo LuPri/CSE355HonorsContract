@@ -26,6 +26,33 @@ typedef struct turingMachine{
 
 void printMachine(turingMachine machine);
 
+bool checkValidity(char symbol, vector<char> alphabet){
+	bool valid = true;
+	for(int i=0; i< alphabet.size(); i++){
+		if(alphabet.at(i) == symbol)
+			valid = false;
+	}
+	return valid;
+}
+
+bool checkState(string state, vector <string> states){
+	bool valid = false;
+	for(int i=0; i<states.size(); i++){
+		if(state.compare(states.at(i)) == 0)
+			valid = true;
+	}
+	return valid;
+}
+
+bool checkTapeAlphabet(char symbol, vector<char> gamma){
+	bool valid = false;
+	for( int i=0; i<gamma.size(); i++){
+		if(symbol == gamma.at(i))
+			valid = true;
+	}
+	return valid;
+}
+
 turingMachine read_seven_tuple(string file){
 	int states;
 	int alphabet;
@@ -51,6 +78,11 @@ turingMachine read_seven_tuple(string file){
 		for(int i=0; i<gamma; i++){
 			char temp;
 			fileReader>>temp;
+			bool valid = checkValidity(temp, machine.alphabet);
+			if(!valid){
+				cout<<"The tape alphabet provided includes symbols given in the language alphabet. PLease make sure your tape alphabet is composed of unique symbols that are not part of the language alphabet.\n";
+				exit(1);
+			}
 			machine.gamma.push_back(temp);
 		}
 		for(int i =0; i< machine.alphabet.size(); i++)
@@ -70,6 +102,26 @@ turingMachine read_seven_tuple(string file){
 			fileReader >> nextState;
 			fileReader >> overwrite;
 			fileReader >> direct;
+			bool valid = checkState(state, machine.states);
+			if(!valid){
+				cout<<"File contains an invalid state on the left hand side of a transition that was not provided in the Turing Machine definition.\n";
+				exit(1);
+			}
+			valid = checkState(nextState, machine.states);
+			if(!valid){
+				cout<<"File contains an invalid state on the right hand side of a transition that was not provided in the Turing Machine definition.\n";
+				exit(1);
+			}
+			valid = checkTapeAlphabet(symbol, machine.gamma);
+			if(!valid){
+				cout<<"File contains an invalid symbol on the left hand side of a transition that is not part of the tape alphabet given in the Turing Machine definition.\n";
+				exit(1);
+			}
+			valid = checkTapeAlphabet(overwrite, machine.gamma);
+			if(!valid){
+				cout<<"File contains an invalid symbol on the right hand side of a transition that is not part of the tape alphabet given in the Turing Machine definition.\n";
+				exit(1);
+			}
 			newFunction.currentState = state;
 			newFunction.currentSymbol= symbol;
 			newFunction.newState = nextState;
@@ -78,8 +130,10 @@ turingMachine read_seven_tuple(string file){
 				newFunction.move = RIGHT;
 			else if(direct.compare("L") == 0)
 				newFunction.move = LEFT;
-			else
-				newFunction.move = ERROR;
+			else{
+				cout<<"File contains invalid movement option. Please make sure you only have R or L in your transitions.\n";
+				exit(1);
+			}
 			machine.function.push_back(newFunction);
 		}
 		fileReader >> machine.start;
@@ -122,6 +176,7 @@ void printMachine(turingMachine machine){
 	}
 	cout<< "Start State: " << machine.start<<endl;
 	cout<< "Accept State: " <<machine.accept<<endl;
+	cout<< "Reject State: qreject\n"; 
 }
 
 vector<char> checkInput(vector <char> alphabet, string input, char blank){
@@ -202,25 +257,25 @@ void simulate(turingMachine machine,  vector<char> tape){
 }
 
 int main(){
-	int run= 1;
-	while(run ==1){
+	char run= 'y';
+	while(run =='y'){
 		cout<<"Please enter the name of the file containing the Turing Machine information.\n";
 		string file;
 		cin>>file;
 		turingMachine machine =read_seven_tuple(file);
 		printMachine(machine);
-		int loop =1;
-		while(loop==1){
+		char loop = 'y';
+		while(loop== 'y'){
 			cout<<"Please enter string you want to test.\n";
 			string input;
 			cin>>input;
 			vector<char> tape= checkInput(machine.alphabet, input, machine.gamma.at(0));
 			if(tape.size() == input.length())
 				simulate(machine, tape);
-			cout<<"Please enter 1 if you want to test another string in the language.\n";
+			cout<<"Would you like to test another string? Please enter y for yes or n for no.\n";
 			cin>> loop;
 		}
-		cout<<"Please enter 1 if you want to read another Turing Machine file.\n";
+		cout<<"Would you like to read in another file? Plase enter y for yes or n for no.\n";
 		cin>>run;
 	}
 }
